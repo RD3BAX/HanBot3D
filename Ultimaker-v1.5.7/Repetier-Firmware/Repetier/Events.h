@@ -39,6 +39,8 @@ Each of the following events describe the parameter and when it is called.
 #define EVENT_KILL(only_steppers) {}
 // Gets called when a jam was detected.
 #define EVENT_JAM_DETECTED {}
+// Gets called at the end of the detection routine.
+#define EVENT_JAM_DETECTED_END {}
 // Gets called every time the jam detection signal switches. Steps are the extruder steps since last change.
 #define EVENT_JAM_SIGNAL_CHANGED(extruderId,steps) {}
 // Gets called if a heater decoupling is detected.
@@ -57,13 +59,13 @@ Each of the following events describe the parameter and when it is called.
 #define EVENT_CONTINUE_FROM_FATAL_ERROR
 
 // Called to initialize laser pins. Return false to prevent default initialization.
-#define EVENT_INITALIZE_LASER true
+#define EVENT_INITIALIZE_LASER true
 // Set laser to intensity level 0 = off, 255 = full. Return false if you have overridden the setting routine.
 // with true the default solution will set it as digital value.
 #define EVENT_SET_LASER(intensity) true
 
 // Called to initialize CNC pins. Return false to prevent default initialization.
-#define EVENT_INITALIZE_CNC true
+#define EVENT_INITIALIZE_CNC true
 // Turn off spindle
 #define EVENT_SPINDLE_OFF true
 // Turn spindle clockwise
@@ -86,13 +88,15 @@ Each of the following events describe the parameter and when it is called.
 // or any other reason why dependent values may need recomputation.
 #define EVENT_UPDATE_DERIVED {}
 
+// Gets called after HAL is initialized, but before the regular pin settings is defined.
+#define EVENT_INITIALIZE_EARLY {}
 // This gets called after the basic firmware functions have initialized.
 // Use this to initialize your hardware etc.
 #define EVENT_INITIALIZE {}
 
 // Allows adding custom symbols in strings that get parsed. Return false if not replaced so defaults can trigger.
 // override function signature: bool parser(uint8_t c1,uint8_t c2)
-#define CUSTOM_TEXT_PARSER(c1,c2) false
+#define EVENT_CUSTOM_TEXT_PARSER(c1,c2) false
 
 // User interface actions
 // These get only executed if there was no hot, so they are ideal to add new actions
@@ -101,12 +105,26 @@ Each of the following events describe the parameter and when it is called.
 #define EVENT_UI_OK_WIZARD(action) {}
 #define EVENT_UI_FINISH_ACTION(action) false
 #define EVENT_UI_EXECUTE(action,allowMoves) {}
+// Returns false if no function was executed
+#define EVENT_UI_OVERRIDE_EXECUTE(action,allowMoves) false
 #define EVENT_UI_NEXTPREVIOUS(action,allowMoves,increment) {}
+// replace by function call returning true if it handled refresh page it self.
+#define EVENT_UI_REFRESH_PAGE false
 
 // the following 2 events are equivalent to slow and fast key function and allow adding extra keys in event system.
 // make sure action is called by reference so it can be changed and returned.
 // Set action only if key is hit
 #define EVENT_CHECK_FAST_KEYS(action) {}
 #define EVENT_CHECK_SLOW_KEYS(action) {}
+
+// Events on sd pause
+#define EVENT_SD_PAUSE_START(intern) true
+#define EVENT_SD_PAUSE_END(intern) {}
+#define EVENT_SD_CONTINUE_START(intern) true
+#define EVENT_SD_CONTINUE_END(intern) {}
+#define EVENT_SD_STOP_START true
+#define EVENT_SD_STOP_END {}
+
+#define EVENT_BEFORE_Z_HOME {}
 
 #endif // EVENTS_H_INCLUDED

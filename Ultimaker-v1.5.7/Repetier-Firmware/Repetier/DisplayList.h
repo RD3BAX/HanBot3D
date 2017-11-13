@@ -37,10 +37,10 @@ void uiCheckSlowKeys(uint16_t &action) {}
 #endif // UI_MAIN
 #endif // NO_CONTROLLER
 
-#if (FEATURE_CONTROLLER == CONTROLLER_SMARTRAMPS) || (FEATURE_CONTROLLER == CONTROLLER_GADGETS3D_SHIELD) || (FEATURE_CONTROLLER == CONTROLLER_REPRAPDISCOUNT_GLCD)  || (FEATURE_CONTROLLER == CONTROLLER_BAM_DICE_DUE)
+#if (FEATURE_CONTROLLER == CONTROLLER_SMARTRAMPS) || (FEATURE_CONTROLLER == CONTROLLER_GADGETS3D_SHIELD) || (FEATURE_CONTROLLER == CONTROLLER_REPRAPDISCOUNT_GLCD)  || (FEATURE_CONTROLLER == CONTROLLER_BAM_DICE_DUE) || (FEATURE_CONTROLLER == CONTROLLER_REPRAPWORLD_GLCD)
 #define UI_HAS_KEYS 1
 #define UI_HAS_BACK_KEY 0
-#if FEATURE_CONTROLLER == CONTROLLER_REPRAPDISCOUNT_GLCD
+#if FEATURE_CONTROLLER == CONTROLLER_REPRAPDISCOUNT_GLCD || (FEATURE_CONTROLLER == CONTROLLER_REPRAPWORLD_GLCD)
 #define UI_DISPLAY_TYPE DISPLAY_U8G
 #define U8GLIB_ST7920
 #define UI_LCD_WIDTH 128
@@ -234,7 +234,7 @@ void uiCheckSlowKeys(uint16_t &action) {}
 #define UI_VOLTAGE_LEVEL 1 // Set 1=5 o 0=3.3 V
 #endif
 
-#elif MOTHERBOARD == CONTROLLER_FELIX_DUE
+#elif MOTHERBOARD == 405 // Felix Pro 1
 
 #undef BEEPER_PIN
 #define BEEPER_PIN             -1
@@ -244,6 +244,18 @@ void uiCheckSlowKeys(uint16_t &action) {}
 #define UI_ENCODER_A           52
 #define UI_ENCODER_B           50
 #define UI_ENCODER_CLICK       48
+#define UI_RESET_PIN           -1
+
+#elif MOTHERBOARD == 101 // Felix Pro 1
+
+#undef BEEPER_PIN
+#define BEEPER_PIN             -1
+#define UI_DISPLAY_RS_PIN      16
+#define UI_DISPLAY_ENABLE_PIN  17
+#define UI_DISPLAY_D4_PIN      23
+#define UI_ENCODER_A           35
+#define UI_ENCODER_B           37
+#define UI_ENCODER_CLICK       31
 #define UI_RESET_PIN           -1
 
 #elif ( MOTHERBOARD == 183 ) || ( MOTHERBOARD == 184 ) // MJRice Pica
@@ -267,7 +279,48 @@ void uiCheckSlowKeys(uint16_t &action) {}
 #define UI_RESET_PIN -1
 #define SDCARDDETECT 49
 
+#elif ((MOTHERBOARD == 409))  // Ultratronics
+
+#undef BEEPER_PIN
+#define BEEPER_PIN             27
+#define UI_DISPLAY_RS_PIN      62
+#define UI_DISPLAY_ENABLE_PIN  75
+#define UI_DISPLAY_D4_PIN      76
+#define UI_DISPLAY_D5_PIN      -1
+#define UI_DISPLAY_D6_PIN      -1
+#define UI_DISPLAY_D7_PIN      -1
+#define UI_ENCODER_A           20
+#define UI_ENCODER_B           21
+#define UI_ENCODER_CLICK       64
+#define UI_RESET_PIN           -1
+#undef SDCARDDETECT
+#define SDCARDDETECT           60
+#undef SDCARDDETECTINVERTED
+#define SDCARDDETECTINVERTED   0
+
+#elif MOTHERBOARD == 413 // RURAMPS4D
+
+#undef BEEPER_PIN
+#define BEEPER_PIN        62
+#define UI_DISPLAY_RS_PIN 63
+#define UI_DISPLAY_RW_PIN -1
+#define UI_DISPLAY_ENABLE_PIN 64
+#define UI_DISPLAY_D0_PIN -1
+#define UI_DISPLAY_D1_PIN -1
+#define UI_DISPLAY_D2_PIN -1
+#define UI_DISPLAY_D3_PIN -1
+#define UI_DISPLAY_D4_PIN 48
+#define UI_DISPLAY_D5_PIN 50
+#define UI_DISPLAY_D6_PIN 52
+#define UI_DISPLAY_D7_PIN 53
+#define UI_ENCODER_A 42
+#define UI_ENCODER_B 44
+#define UI_ENCODER_CLICK 40
+#define UI_RESET_PIN -1
+#define UI_INVERT_MENU_DIRECTION 1
+
 #else  // RAMPS
+
 #undef BEEPER_PIN
 #define BEEPER_PIN             37
 #define UI_DISPLAY_RS_PIN      16

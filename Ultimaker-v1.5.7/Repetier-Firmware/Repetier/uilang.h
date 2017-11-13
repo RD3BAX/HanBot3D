@@ -21,7 +21,7 @@
 #endif
 
 //Symbolic character values for specific symbols.
-//May be overridden for different controllers, charactersets, etc.
+//May be overridden for different controllers, character sets, etc.
 #define cUP "\001"
 #define cDEG "\002"
 #define cSEL "\003"
@@ -31,7 +31,7 @@
 #define bFOLD 6
 #define cARROW "\176"
 
-#if UI_DISPLAY_CHARSET == 0 // ASCII fallback
+#if UI_DISPLAY_CHARSET == 0 // ASCII fall back
 #define CHAR_RIGHT '-'
 #define CHAR_SELECTOR '>'
 #define CHAR_SELECTED '*'
@@ -98,7 +98,7 @@
 #define LANGUAGE_FI_ID 11
 
 #define NUM_LANGUAGES_KNOWN 12
-#define NUM_TRANSLATED_WORDS 304
+#define NUM_TRANSLATED_WORDS 311
 
 // For selectable translations we refer to each text by a id which gets
 // defined here. The list starts at 0 and defines the position in the
@@ -411,7 +411,13 @@
 #define UI_TEXT_CLOSE_ID 301 // "Close"
 #define UI_TEXT_EXTR_ZOFF_ID 302 //         "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_ID 303 // "Measuring ..."
-
+#define UI_TEXT_Z_PROBE_ID 304
+#define UI_TEXT_MAINPAGE6_1_C_ID 305 //"\xa %e0/%E0\xb0 X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_ID 306 //"\xa %e1/%E1\xb0 Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_ID 307 //"\xe %eb/%Eb\xb0 Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_C_ID 308 //""Mul: %om%%% Laser %op W"
+#define UI_TEXT_MAINPAGE6_4_L_ID 309 //""Mul: %om%%% Spindle %opRPM"
+#define UI_TEXT_JAMCONTROL_ID 310 // "%ej Jam Control
 // Universal definitions
 
 #define UI_TEXT_SEL              cSEL
@@ -747,6 +753,13 @@
 #define UI_TEXT_CLOSE_EN "Close"
 #define UI_TEXT_EXTR_ZOFF_EN "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_EN "Measuring ..."
+#define UI_TEXT_Z_PROBE_EN "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_EN "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_EN "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_EN "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_EN "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_EN "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_EN "%ej Jam Control"
 
 // *************** German translation ****************
 
@@ -1077,6 +1090,13 @@
 #define UI_TEXT_CLOSE_DE "Abbruch"
 #define UI_TEXT_EXTR_ZOFF_DE "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_DE "Messe ..."
+#define UI_TEXT_Z_PROBE_DE "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_DE "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_DE "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_DE "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_DE "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_DE "Mul: %om%%%    Spi:%opRPM"
+#define UI_TEXT_JAMCONTROL_DE "%ej Blockaden" STR_uuml "berw."
 
 // Dutch translation
 
@@ -1405,6 +1425,13 @@
 #define UI_TEXT_CLOSE_NL "Close"
 #define UI_TEXT_EXTR_ZOFF_NL "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_NL "Measuring ..."
+#define UI_TEXT_Z_PROBE_NL "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_NL "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_NL "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_NL "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_NL "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_NL "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_NL "%ej Jam Control"
 
 // *************** Brazilian portuguese translation ****************
 
@@ -1735,6 +1762,13 @@
 #define UI_TEXT_CLOSE_PT "Close"
 #define UI_TEXT_EXTR_ZOFF_PT "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_PT "Measuring ..."
+#define UI_TEXT_Z_PROBE_PT "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_PT "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_PT "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_PT "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_PT "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_PT "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_PT "%ej Jam Control"
 
 // *************** Italian translation ****************
 
@@ -1774,7 +1808,7 @@
 #define UI_TEXT_Z_POSITION_IT       "Posizione Z"
 #define UI_TEXT_Z_POS_FAST_IT       "Pos. Z Veloce"
 #define UI_TEXT_E_POSITION_IT       "Posizione Estrusore"
-#define UI_TEXT_BED_TEMP_IT         "Temp.Piatto:%Eb" cDEG "C"
+#define UI_TEXT_BED_TEMP_IT         "Temp.Piatto:%eb/%Eb" cDEG "C"
 #define UI_TEXT_EXTR0_TEMP_IT       "Temp. 1 :%e0/%E0" cDEG "C"
 #define UI_TEXT_EXTR1_TEMP_IT       "Temp. 2 :%e1/%E1" cDEG "C"
 #define UI_TEXT_EXTR2_TEMP_IT       "Temp. 3 :%e2/%E2" cDEG "C"
@@ -2063,6 +2097,13 @@
 #define UI_TEXT_CLOSE_IT "Close"
 #define UI_TEXT_EXTR_ZOFF_IT "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_IT "Measuring ..."
+#define UI_TEXT_Z_PROBE_IT "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_IT "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_IT "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_IT "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_IT "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_IT "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_IT "%ej Jam Control"
 
 // Spanish translation
 
@@ -2391,6 +2432,13 @@
 #define UI_TEXT_CLOSE_ES "Close"
 #define UI_TEXT_EXTR_ZOFF_ES "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_ES "Measuring ..."
+#define UI_TEXT_Z_PROBE_ES "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_ES "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_ES "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_ES "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_ES "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_ES "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_ES "%ej Jam Control"
 
 
 // *************** Swedish translation ****************
@@ -2421,7 +2469,7 @@
 #define UI_TEXT_HOME_Z_SE           "K" STR_ouml "r hem Z"
 #define UI_TEXT_PREHEAT_SINGLE_SE   "Preheat Single Extr."
 #define UI_TEXT_PREHEAT_ALL_SE      "Preheat All Extr."
-#define UI_TEXT_LIGHTS_ONOFF_SE     "Lights:%lo"
+#define UI_TEXT_LIGHTS_ONOFF_SE     "Lampor:%lo"
 #define UI_TEXT_COOLDOWN_SE         "Kyl ner"
 #define UI_TEXT_SET_TO_ORIGIN_SE    "S"  STR_auml "tt som origo"
 #define UI_TEXT_DISABLE_STEPPER_SE  "St" STR_auml "ng av stegmotor"
@@ -2509,7 +2557,7 @@
 #define UI_TEXT_ACTION_ZPOSITION_FAST4C_SE "Max " STR_auml "ndl" STR_auml "ge:%sZ"
 #define UI_TEXT_ACTION_ZPOSITION_FAST4D_SE ""
 #define UI_TEXT_ACTION_EPOSITION_FAST2A_SE "E:%x3 mm"
-#define UI_TEXT_ACTION_EPOSITION_FAST2B_SE "1 click = 1 mm"
+#define UI_TEXT_ACTION_EPOSITION_FAST2B_SE "Ett klick = 1 mm"
 #define UI_TEXT_ACTION_XPOSITION2A_SE "X:%x0 mm"
 #define UI_TEXT_ACTION_XPOSITION2B_SE "Min:%sx Max:%sX"
 #define UI_TEXT_ACTION_YPOSITION2A_SE "Y:%x1 mm"
@@ -2615,7 +2663,7 @@
 #define UI_TEXT_WIZ_WAITTEMP1_SE "V" STR_auml "nta pa"
 #define UI_TEXT_WIZ_WAITTEMP2_SE "maltemperaturer ..."
 #define UI_TEXT_EXTRUDER_JAM_SE "Extruder tr" STR_auml "ngsel"
-#define UI_TEXT_STANDBY_SE "Standby"
+#define UI_TEXT_STANDBY_SE "Vilar"
 #define UI_TEXT_BED_COATING_SE "B" STR_auml "ddbel" STR_auml "ggning"
 #define UI_TEXT_BED_COATING_SET1_SE "B" STR_auml "ddbel" STR_auml "ggning:"
 #define UI_TEXT_BED_COATING_SET2_SE ""
@@ -2723,6 +2771,14 @@
 #define UI_TEXT_CLOSE_SE "Close"
 #define UI_TEXT_EXTR_ZOFF_SE "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_SE "Measuring ..."
+#define UI_TEXT_Z_PROBE_SE "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_SE "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_SE "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_SE "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_SE "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_SE "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_SE "%ej Jam Control"
+
 
 // *************** French translation ****************
 // ***************      By Doudou     ****************
@@ -2738,7 +2794,7 @@
 #define UI_TEXT_NOSDCARD_FR         "Pas de Carte SD"
 #define UI_TEXT_ERROR_FR            "**** ERREUR ****"
 #define UI_TEXT_BACK_FR             "Retour \001"
-#define UI_TEXT_QUICK_SETTINGS_FR   "Control" //"Reglages Rapides"
+#define UI_TEXT_QUICK_SETTINGS_FR   "Controle" //"Reglages Rapides"
 #define UI_TEXT_ERRORMSG_FR         "%oe"
 #define UI_TEXT_CONFIGURATION_FR    "Configuration"
 #define UI_TEXT_POSITION_FR         "Position"
@@ -2785,8 +2841,8 @@
 #define UI_TEXT_JERK_FR             "Jerk:%aj"
 #define UI_TEXT_ZJERK_FR            "Z-Jerk:%aJ"
 #define UI_TEXT_ACCELERATION_FR     "Acceleration"
-#define UI_TEXT_STORE_TO_EEPROM_FR  "Stock. Dans EEPROM"
-#define UI_TEXT_LOAD_EEPROM_FR      "Charg. f. EEPROM"
+#define UI_TEXT_STORE_TO_EEPROM_FR  "Stock. => EEPROM"
+#define UI_TEXT_LOAD_EEPROM_FR      "Charg. <= EEPROM"
 #define UI_TEXT_DBG_ECHO_FR         "Echo         :%do"
 #define UI_TEXT_DBG_INFO_FR         "Info         :%di"
 #define UI_TEXT_DBG_ERROR_FR        "Erreurs      :%de"
@@ -2798,7 +2854,7 @@
 #define UI_TEXT_OPS_RETRACT_FR      "Retract. :%Or"
 #define UI_TEXT_OPS_BACKSLASH_FR    "Backsl. :%Ob"
 #define UI_TEXT_OPS_MINDIST_FR      "Min.dist:%Od"
-#define UI_TEXT_OPS_MOVE_AFTER_FR   "DÃ©plac. Apres:%Oa"
+#define UI_TEXT_OPS_MOVE_AFTER_FR   "Deplac. Apres:%Oa"
 #define UI_TEXT_ANTI_OOZE_FR        "Anti Ooze"
 #define UI_TEXT_PRINT_FILE_FR       "Imprim. fichier"
 #define UI_TEXT_PAUSE_PRINT_FR      "Pause Impress."
@@ -2894,9 +2950,9 @@
 #define UI_TEXT_KILLED_FR            "Stoppe"
 #define UI_TEXT_STEPPER_DISABLED_FR  "Moteurs Arretes"
 #define UI_TEXT_EEPROM_STOREDA_FR     "Configuration"
-#define UI_TEXT_EEPROM_STOREDB_FR     "Stock. Dans EEPROM"
+#define UI_TEXT_EEPROM_STOREDB_FR     "Stock. => EEPROM"
 #define UI_TEXT_EEPROM_LOADEDA_FR     "Configuration"
-#define UI_TEXT_EEPROM_LOADEDB_FR     "Charg. f. EEPROM"
+#define UI_TEXT_EEPROM_LOADEDB_FR     "Charg. <= EEPROM"
 #define UI_TEXT_UPLOADING_FR         "Telechargement.."
 #define UI_TEXT_PAGE_BUFFER_FR       "Tampon:%oB"
 #define UI_TEXT_PAGE_EXTRUDER_FR     " E:%ec/%Ec\002C\176%oC"
@@ -2919,7 +2975,7 @@
 #define UI_TEXT_EXTR_WAIT_RETRACT_UNITS_FR "Att. Units:%XUmm"
 #define UI_TEXT_SD_REMOVED_FR       "Carte SD retiree"
 #define UI_TEXT_SD_INSERTED_FR      "Carte SD inseree"
-#define UI_TEXT_PRINTER_READY_FR    "imprimante prete"
+#define UI_TEXT_PRINTER_READY_FR    "Imprimante prete"
 // Printtime output gets aggregated like <Days_5gisgits>UI_TEXT_PRINTTIME_DAYS<Hours>UI_TEXT_PRINTTIME_HOURS<Minutes>UI_TEXT_PRINTTIME_MINUTES
 // ___88 days 12:45
 #define UI_TEXT_PRINTTIME_DAYS_FR      " jours "
@@ -2927,7 +2983,7 @@
 #define UI_TEXT_PRINTTIME_MINUTES_FR   ""
 #define UI_TEXT_PRINT_TIME_FR          "Temps Impression"
 #define UI_TEXT_PRINT_FILAMENT_FR      "Filament Imprime"
-#define UI_TEXT_PRINTED_FR           "Imprime"
+#define UI_TEXT_PRINTED_FR             "Imprime"
 #define UI_TEXT_POWER_FR               "ATX power on/off"
 #define UI_TEXT_STRING_HM_DEADTIME_FR  "Temps Mort"
 #define UI_TEXT_STRING_HM_SLOWBANG_FR  "Tout ou Rien"
@@ -2937,13 +2993,13 @@
 #define UI_TEXT_WIZ_CH_FILAMENT1_FR "Changement Filament"
 #define UI_TEXT_WIZ_CH_FILAMENT2_FR "Tournez Deplacer"
 #define UI_TEXT_WIZ_CH_FILAMENT3_FR "Filament haut/bas"
-#define UI_TEXT_CLICK_DONE_FR "Continuer avec Clic"
+#define UI_TEXT_CLICK_DONE_FR 		"Continuer avec Clic"
 #define UI_TEXT_AUTOLEVEL_ONOFF_FR  "Autolevel: %ll"
-#define UI_TEXT_SERVOPOS_FR "Pos. Servo: %oS"
+#define UI_TEXT_SERVOPOS_FR 		"Pos. Servo: %oS"
 #define UI_TEXT_IGNORE_M106_FR      "Ignorer M106 %Fi"
-#define UI_TEXT_WIZ_REHEAT1_FR "Cliquez pour"
-#define UI_TEXT_WIZ_REHEAT2_FR "Rechauffer Extrud."
-#define UI_TEXT_WIZ_WAITTEMP1_FR "Attendez Temp."
+#define UI_TEXT_WIZ_REHEAT1_FR 		"Cliquez pour"
+#define UI_TEXT_WIZ_REHEAT2_FR 		"Rechauffer Extrud."
+#define UI_TEXT_WIZ_WAITTEMP1_FR 	"Attendez Temp."
 #define UI_TEXT_WIZ_WAITTEMP2_FR "cibles ..."
 #define UI_TEXT_EXTRUDER_JAM_FR "Stockage d'Extrusion"
 #define UI_TEXT_STANDBY_FR "Standby"
@@ -2956,8 +3012,8 @@
 #define UI_TEXT_BLUETAPE_FR "Blue Tape"
 #define UI_TEXT_PETTAPE_FR "Ruban vert PET"
 #define UI_TEXT_GLUESTICK_FR "Baton de Colle"
-#define UI_TEXT_CUSTOM_FR "Coutume"
-#define UI_TEXT_COATING_CUSTOM_FR "Coutume:%BCmm"
+#define UI_TEXT_CUSTOM_FR "Personnel"
+#define UI_TEXT_COATING_CUSTOM_FR "Epaisseur:%BCmm"
 #define UI_TEXT_LANGUAGE_FR "Langue"
 
 #if NUM_EXTRUDER > 2 || MIXING_EXTRUDER != 0
@@ -3018,40 +3074,47 @@
 #define UI_TEXT_PROGRESS_FR "%Pp%%%"
 #define UI_TEXT_PRINTNAME_FR "%Pn"
 
-#define UI_TEXT_SETUP_FR "Setup"
-#define UI_TEXT_MEASURE_DISTORTION_FR "Measure z-distortion"
-#define UI_TEXT_DISTORTION_CORR_FR "Distortion corr.:%De"
-#define UI_TEXT_ACTION_FAN2SPEED_FR   "Fan 2 speed:%FS%%%"
-#define UI_TEXT_CANCEL_FR "Cancel"
-#define UI_TEXT_PLEASE_WAIT_FR "*** Please wait ***"
-#define UI_TEXT_CLEARBED1_FR "Make sure the heated"
-#define UI_TEXT_CLEARBED2_FR "bed is clear of any"
-#define UI_TEXT_CLEARBED3_FR "obstructions"
+#define UI_TEXT_SETUP_FR "Reglages"
+#define UI_TEXT_MEASURE_DISTORTION_FR "Mesure z-distorsion"
+#define UI_TEXT_DISTORTION_CORR_FR "Distorsion corr.:%De"
+#define UI_TEXT_ACTION_FAN2SPEED_FR   "Vitesse Fan 2:%FS%%%"
+#define UI_TEXT_CANCEL_FR "Annule"
+#define UI_TEXT_PLEASE_WAIT_FR "*** Patientez ***"
+#define UI_TEXT_CLEARBED1_FR "Assurez-vous que"
+#define UI_TEXT_CLEARBED2_FR "le lit chauffant"
+#define UI_TEXT_CLEARBED3_FR "soit degage"
 #define UI_TEXT_NOTIFICATION_FR "Notification:"
-#define UI_TEXT_TEMPSENSOR_DEFECT_FR "Temp. sensor defect"
-#define UI_TEXT_HEATER_DECOUPLED_FR "Heater decoupled"
-#define UI_TEXT_SLIPPING_FR "Filament slipping"
-#define UI_TEXT_LEVELING_ERROR_FR "Leveling error"
+#define UI_TEXT_TEMPSENSOR_DEFECT_FR "Defaut Sonde Temp."
+#define UI_TEXT_HEATER_DECOUPLED_FR "Chauffage decouple"
+#define UI_TEXT_SLIPPING_FR "Filament glissant"
+#define UI_TEXT_LEVELING_ERROR_FR "Nivellement Erreur"
 #define UI_TEXT_OK_FR "    >>> Ok <<<"
-#define UI_TEXT_CALIBRATING_FR "Calibrating bed"
-#define UI_TEXT_CALIBRATION_ERROR_FR "Calibration Error"
-#define UI_TEXT_AUTOLEVEL_BED_FR "Autolevel bed"
-#define UI_TEXT_HOMING_FR "Homing..."
-#define UI_TEXT_PREHEAT_TEMPS_FR "Preheat Temperatures"
+#define UI_TEXT_CALIBRATING_FR "Calibrage Lit"
+#define UI_TEXT_CALIBRATION_ERROR_FR "Calibrage Erreur"
+#define UI_TEXT_AUTOLEVEL_BED_FR "Autolevel Lit"
+#define UI_TEXT_HOMING_FR "Prise d'Origine ..."
+#define UI_TEXT_PREHEAT_TEMPS_FR "Prechauffage Temp."
 #define UI_TEXT_PREHEAT_E0_FR "Extr. 1: %p0" cDEG "C"
 #define UI_TEXT_PREHEAT_E1_FR "Extr. 2: %p1" cDEG "C"
 #define UI_TEXT_PREHEAT_E2_FR "Extr. 3: %p2" cDEG "C"
 #define UI_TEXT_PREHEAT_E3_FR "Extr. 4: %p3" cDEG "C"
 #define UI_TEXT_PREHEAT_E4_FR "Extr. 5: %p4" cDEG "C"
 #define UI_TEXT_PREHEAT_E5_FR "Extr. 6: %p5" cDEG "C"
-#define UI_TEXT_PREHEAT_BED_FR "Bed    : %pb" cDEG "C"
-#define UI_TEXT_MEAS_ZP_HEIGHT_FR "Meas. Probe Height"
+#define UI_TEXT_PREHEAT_BED_FR "Lit    : %pb" cDEG "C"
+#define UI_TEXT_MEAS_ZP_HEIGHT_FR "Mes. Hauteur Sonde"
 #define UI_TEXT_CUR_TEMP_FR "Temp. %ec/%Ec" cDEG "C"
-#define UI_TEXT_REAL_Z_FR "Real Z Pos:%W0mm"
+#define UI_TEXT_REAL_Z_FR "Pos. Reel Z:%W0mm"
 #define UI_TEXT_CONTINUE_FR "Continue"
-#define UI_TEXT_CLOSE_FR "Close"
+#define UI_TEXT_CLOSE_FR "Ferme"
 #define UI_TEXT_EXTR_ZOFF_FR "Z-Offset:%Xz"
-#define UI_TEXT_MEASURING_FR "Measuring ..."
+#define UI_TEXT_MEASURING_FR "Mesure ..."
+#define UI_TEXT_Z_PROBE_FR "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_FR "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_FR "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_FR "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_FR "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_FR "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_FR "%ej Jam Control"
 
 // *************** Czech translation ****************
 // ***************      By Majkl     ****************
@@ -3383,6 +3446,13 @@
 #define UI_TEXT_CLOSE_CZ "Close"
 #define UI_TEXT_EXTR_ZOFF_CZ "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_CZ "Measuring ..."
+#define UI_TEXT_Z_PROBE_CZ "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_CZ "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_CZ "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_CZ "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_CZ "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_CZ "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_CZ "%ej Jam Control"
 
 // *************** Polish translation ****************
 // ***************       By MIS       ****************
@@ -3712,6 +3782,13 @@
 #define UI_TEXT_CLOSE_PL "Close"
 #define UI_TEXT_EXTR_ZOFF_PL "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_PL "Measuring ..."
+#define UI_TEXT_Z_PROBE_PL "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_PL "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_PL "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_PL "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_PL "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_PL "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_PL "%ej Jam Control"
 
 // Türk
 
@@ -4038,6 +4115,13 @@
 #define UI_TEXT_CLOSE_TR "Close"
 #define UI_TEXT_EXTR_ZOFF_TR "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_TR "Measuring ..."
+#define UI_TEXT_Z_PROBE_TR "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_TR "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_TR "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_TR "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_TR "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_TR "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_TR "%ej Jam Control"
 
 // *************** Finnish translation ****************
 // ********** By Matti Granstedt 28.01.2016 ***********
@@ -4367,6 +4451,13 @@
 #define UI_TEXT_CLOSE_FI "Close"
 #define UI_TEXT_EXTR_ZOFF_FI "Z-Offset:%Xz"
 #define UI_TEXT_MEASURING_FI "Measuring ..."
+#define UI_TEXT_Z_PROBE_FI "Start Z-Probe"
+#define UI_TEXT_MAINPAGE6_1_C_FI "Xw:%x5   X:%x0"
+#define UI_TEXT_MAINPAGE6_2_C_FI "Yw:%x6   Y:%x1"
+#define UI_TEXT_MAINPAGE6_3_C_FI "Zw:%x7   Z:%x2"
+#define UI_TEXT_MAINPAGE6_4_L_FI "Mul: %om%%%    Las:%op W"
+#define UI_TEXT_MAINPAGE6_4_C_FI "Mul: %om%%%    Spi:%opRPM "
+#define UI_TEXT_JAMCONTROL_FI "%ej Jam Control"
 
 #define TRANS(x) UI_STRING(F ## x,x)
 #ifdef CUSTOM_TRANSLATIONS

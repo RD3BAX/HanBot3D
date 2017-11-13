@@ -116,6 +116,7 @@ What display type do you use?
 // SH1106 with software SPI
 // U8GLIB_SH1106_SW_SPI
 // SSD1306 over I2C using hardware I2C pins
+// #define U8GLIB_MINI12864_2X_SW_SPI
 //#define U8GLIB_SSD1306_I2C
 // For the 8 bit ks0108 display you need to set these pins
 // UI_DISPLAY_D0_PIN,UI_DISPLAY_D1_PIN,UI_DISPLAY_D2_PIN,UI_DISPLAY_D3_PIN,UI_DISPLAY_D4_PIN,UI_DISPLAY_D5_PIN,UI_DISPLAY_D6_PIN,UI_DISPLAY_D7_PIN
@@ -144,6 +145,7 @@ What display type do you use?
 //calculate rows and cols available with current font
 #define UI_COLS (UI_LCD_WIDTH/UI_FONT_WIDTH)
 #define UI_ROWS (UI_LCD_HEIGHT/UI_FONT_HEIGHT)
+#undef UI_DISPLAY_CHARSET
 #define UI_DISPLAY_CHARSET 3
 #else
 /** Number of columns per row
@@ -242,7 +244,8 @@ Define the pin
 0 = No keys attached - disables also menu
 1 = Some keys attached
 */
-#define UI_HAS_KEYS 0
+#undef UI_HAS_KEYS
+#define UI_HAS_KEYS 1
 
 
 /** \brief Is a back key present.

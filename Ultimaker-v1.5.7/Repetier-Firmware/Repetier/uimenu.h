@@ -86,6 +86,7 @@
   %Ec : Target temperature of current extruder
   %Eb : Target temperature of heated bed
   %E0-9 : Target temperature of extruder 0..9
+  %ej : Checkbox with jam enabled state
   %D0-3 : Ditto mode selected
   feed rate
   %fx : Max. feedrate x direction
@@ -118,6 +119,7 @@
   %oS : servo position
   %oY : baby steps counter
   %BC : Bed coating thickness
+  %oP : PWM position Laser/Spindle
 
   Print status related
   %Pn : filename being printed
@@ -140,7 +142,8 @@
   %Se : Steps per mm current extruder
 
   totals
-  %Ut : Shows printing time
+  %Ut : Shows printing time in days hours:minutes
+  %Uh : Shows printing time in hours
   %Uf : Shows total filament usage
 
   extruder position
@@ -149,6 +152,11 @@
   %x2 : Z position
   %x3 : Current extruder position
   %x4 : Printed since temperature on in meters (for filament usage)
+  
+  %x5 : X position include offset
+  %x6 : Y position include offset
+  %x7 : Z position include offset  
+ 
   %xa-%xf : Extruder state icon 0x08 or 0x09 or 0x0a (off) - works only with graphic displays!
   %xB : Bed icon state 0x0c or 0x0d or 0x0b (off) Bed state - works only with graphic displays!
   
@@ -332,7 +340,11 @@ UI_PAGE4_T(ui_page1, UI_TEXT_EMPTY_ID, UI_TEXT_MAINPAGE_Z_BUF_ID, UI_TEXT_MAINPA
 UI_PAGE4_T(ui_page2, UI_TEXT_ACTION_XPOSITION4A_ID, UI_TEXT_ACTION_YPOSITION4A_ID, UI_TEXT_ACTION_ZPOSITION4A_ID, UI_TEXT_STATUS_ID)
 //UI_PAGE4(ui_page2,"dX:%y0 mm %sX","dY:%y1 mm %sY","dZ:%y2 mm %sZ","%os");
 #if NUM_EXTRUDER > 0
+#if NUM_EXTRUDER == 1 || (NUM_EXTRUDER > 1 && MIXING_EXTRUDER > 0)
+UI_PAGE4_T(ui_page3, UI_TEXT_PAGE_EXTRUDER_ID
+#else
 UI_PAGE4_T(ui_page3, UI_TEXT_PAGE_EXTRUDER1_ID
+#endif
 #else
 UI_PAGE4_T(ui_page3
 #endif
@@ -908,7 +920,9 @@ UI_MENU_ACTIONCOMMAND_T(ui_menu_fan_50, UI_TEXT_FAN_50_ID, UI_ACTION_FAN_50)
 UI_MENU_ACTIONCOMMAND_T(ui_menu_fan_75, UI_TEXT_FAN_75_ID, UI_ACTION_FAN_75)
 UI_MENU_ACTIONCOMMAND_T(ui_menu_fan_full, UI_TEXT_FAN_FULL_ID, UI_ACTION_FAN_FULL)
 UI_MENU_ACTIONCOMMAND_T(ui_menu_fan_ignoreM106, UI_TEXT_IGNORE_M106_ID, UI_ACTION_IGNORE_M106)
+UI_MENU_ACTIONCOMMAND_FILTER_T(ui_menu_fan_ignoreM106_printing, UI_TEXT_IGNORE_M106_ID, UI_ACTION_IGNORE_M106,MENU_MODE_PRINTING,0)
 #define UI_IGNORE106_ENTRY ,&ui_menu_fan_ignoreM106
+#define UI_IGNORE106_ENTRY_PRINTING ,&ui_menu_fan_ignoreM106_printing
 #define UI_MENU_FAN {UI_MENU_ADDCONDBACK &ui_menu_fan_fanspeed,&ui_menu_fan_off,&ui_menu_fan_25,&ui_menu_fan_50,&ui_menu_fan_75,&ui_menu_fan_full,&ui_menu_fan_ignoreM106}
 UI_MENU(ui_menu_fan, UI_MENU_FAN, 7 + UI_MENU_BACKCNT)
 UI_MENU_SUBMENU_T(ui_menu_fan_sub, UI_TEXT_FANSPEED_ID, ui_menu_fan)
@@ -920,6 +934,7 @@ UI_MENU_SUBMENU_T(ui_menu_fan_sub, UI_TEXT_FANSPEED_ID, ui_menu_fan)
 #define UI_FANSPEED
 #define UI_MENU_FAN_CNT 0
 #define UI_IGNORE106_ENTRY
+#define UI_IGNORE106_ENTRY_PRINTING
 #define UI_FANSPEED_PRINTING
 #endif
 
@@ -1064,7 +1079,7 @@ UI_MENU(ui_menu_askstop, UI_MENU_ASKSTOP, 3)
 UI_MENU_FILESELECT(ui_menu_sd_fileselector, UI_MENU_SD_FILESELECTOR, 1)
 UI_MENU_ACTIONCOMMAND_FILTER_T(ui_menu_sd_printfile, UI_TEXT_PRINT_FILE_ID,     UI_ACTION_SD_PRINT,    MENU_MODE_SD_MOUNTED,  MENU_MODE_SD_PRINTING)
 UI_MENU_ACTIONCOMMAND_FILTER_T(ui_menu_sd_pause,     UI_TEXT_PAUSE_PRINT_ID,    UI_ACTION_SD_PAUSE,    MENU_MODE_SD_PRINTING, MENU_MODE_PAUSED)
-UI_MENU_ACTIONCOMMAND_FILTER_T(ui_menu_sd_continue,  UI_TEXT_CONTINUE_PRINT_ID, UI_ACTION_SD_CONTINUE, MENU_MODE_SD_PRINTING+MENU_MODE_PAUSED,   0)
+UI_MENU_ACTIONCOMMAND_FILTER_T(ui_menu_sd_continue,  UI_TEXT_CONTINUE_PRINT_ID, UI_ACTION_SD_CONTINUE, MENU_MODE_SD_PRINTING + MENU_MODE_PAUSED,   0)
 // two versions of stop. Second is with security question since pausing can trigger stop with bad luck!
 //UI_MENU_ACTIONCOMMAND_FILTER_T(ui_menu_sd_stop,      UI_TEXT_STOP_PRINT_ID,     UI_ACTION_SD_STOP,     MENU_MODE_SD_PRINTING, 0)
 UI_MENU_SUBMENU_FILTER_T(ui_menu_sd_stop, UI_TEXT_STOP_PRINT_ID, ui_menu_askstop, MENU_MODE_SD_PRINTING, 0 )
@@ -1186,7 +1201,6 @@ UI_MENU_CHANGEACTION_T(ui_menu_cext_advancel, UI_TEXT_EXTR_ADVANCE_L_ID, UI_ACTI
 #endif
 UI_MENU_CHANGEACTION_T(       ui_menu_cext_manager, UI_TEXT_EXTR_MANAGER_ID, UI_ACTION_EXTR_HEATMANAGER)
 UI_MENU_CHANGEACTION_T(       ui_menu_cext_pmax,    UI_TEXT_EXTR_PMAX_ID,    UI_ACTION_PID_MAX)
-#if TEMP_PID
 UI_MENU_CHANGEACTION_FILTER_T(ui_menu_cext_pgain,   UI_TEXT_EXTR_PGAIN_ID,   UI_ACTION_PID_PGAIN, MENU_MODE_FULL_PID, 0)
 UI_MENU_CHANGEACTION_FILTER_T(ui_menu_cext_igain,   UI_TEXT_EXTR_IGAIN_ID,   UI_ACTION_PID_IGAIN,  MENU_MODE_FULL_PID, 0)
 UI_MENU_CHANGEACTION_FILTER_T(ui_menu_cext_dgain,   UI_TEXT_EXTR_DGAIN_ID,   UI_ACTION_PID_DGAIN,  MENU_MODE_FULL_PID, 0)
@@ -1196,10 +1210,6 @@ UI_MENU_CHANGEACTION_FILTER_T(ui_menu_cext_pgain_dt,   UI_TEXT_EXTR_DEADTIME_ID,
 UI_MENU_CHANGEACTION_FILTER_T(ui_menu_cext_dmax_dt,    UI_TEXT_EXTR_DMAX_DT_ID,    UI_ACTION_DRIVE_MAX,  MENU_MODE_DEADTIME, 0)
 #define UI_MENU_PIDCOND ,&ui_menu_cext_manager,&ui_menu_cext_pgain,&ui_menu_cext_igain,&ui_menu_cext_dgain,&ui_menu_cext_dmin,&ui_menu_cext_dmax, &ui_menu_cext_pgain_dt,&ui_menu_cext_dmax_dt,&ui_menu_cext_pmax
 #define UI_MENU_PIDCNT 9
-#else
-#define UI_MENU_PIDCOND ,&ui_menu_cext_manager, &ui_menu_cext_pmax
-#define UI_MENU_PIDCNT 2
-#endif
 #if NUM_EXTRUDER > 5 && MIXING_EXTRUDER == 0
 UI_MENU_CHANGEACTION_T(ui_menu_cext_xoffset, UI_TEXT_EXTR_XOFF_ID, UI_ACTION_X_OFFSET)
 UI_MENU_CHANGEACTION_T(ui_menu_cext_yoffset, UI_TEXT_EXTR_YOFF_ID, UI_ACTION_Y_OFFSET)
@@ -1239,13 +1249,8 @@ UI_MENU(ui_menu_cextr, UI_MENU_CEXTR, 7 + UI_MENU_BACKCNT + UI_MENU_PIDCNT + UI_
 
 // HeatBed Configuration - use menu actions from extruder configuration
 #if HAVE_HEATED_BED
-#if TEMP_PID
 #define UI_MENU_BEDCONF {UI_MENU_ADDCONDBACK &ui_menu_cext_manager,&ui_menu_cext_pgain,&ui_menu_cext_igain,&ui_menu_cext_dgain,&ui_menu_cext_dmin,&ui_menu_cext_dmax,&ui_menu_cext_pgain_dt,&ui_menu_cext_pmax}
 UI_MENU(ui_menu_bedconf, UI_MENU_BEDCONF, 8 + UI_MENU_BACKCNT)
-#else
-#define UI_MENU_BEDCONF {UI_MENU_ADDCONDBACK &ui_menu_cext_manager, &ui_menu_cext_pmax}
-UI_MENU(ui_menu_bedconf, UI_MENU_BEDCONF, 2 + UI_MENU_BACKCNT)
-#endif
 #endif
 
 
@@ -1386,7 +1391,7 @@ UI_MENU_SUBMENU_FILTER_T(ui_setup, UI_TEXT_SETUP_ID, ui_menu_setup,0,MENU_MODE_P
 // stop/pause/continue entries
 
 UI_MENU_ACTIONCOMMAND_FILTER_T(ui_pause,UI_TEXT_PAUSE_PRINT_ID,UI_ACTION_PAUSE,MENU_MODE_PRINTING,MENU_MODE_PAUSED)
-UI_MENU_ACTIONCOMMAND_FILTER_T(ui_continue,UI_TEXT_CONTINUE_PRINT_ID,UI_ACTION_CONTINUE,MENU_MODE_PRINTING+MENU_MODE_PAUSED,0)
+UI_MENU_ACTIONCOMMAND_FILTER_T(ui_continue,UI_TEXT_CONTINUE_PRINT_ID,UI_ACTION_CONTINUE,MENU_MODE_PAUSED,0)
 UI_MENU_ACTIONCOMMAND_FILTER_T(ui_stop,UI_TEXT_STOP_PRINT_ID,UI_ACTION_STOP,MENU_MODE_PRINTING,MENU_MODE_PAUSED)
 
 
@@ -1397,12 +1402,12 @@ UI_MENU_SUBMENU_FILTER_T(ui_menu_extrudercontrol, UI_TEXT_EXTRUDER_ID, ui_menu_e
 UI_MENU_SUBMENU_FILTER_T(ui_menu_settings, UI_TEXT_CONFIGURATION_ID, ui_menu_configuration,0,MENU_MODE_PRINTING)
 #define UI_MENU_MAIN {UI_MENU_ADDCONDBACK &ui_menu_control ,&ui_stop,&ui_pause,&ui_continue \
     UI_TEMP0_PRINTING UI_TEMP1_PRINTING UI_TEMP2_PRINTING UI_TEMP3_PRINTING UI_TEMP4_PRINTING UI_TEMP5_PRINTING \
-    UI_BED_TEMP_PRINTING ,&ui_menu_quick_speedmultiply_printing UI_CHANGE_FIL_ENT_PRINTING ,&ui_menu_quick_flowmultiply_printing UI_FANSPEED_PRINTING UI_FAN2SPEED_PRINTING BABY_ENTRY_PRINTING SD_PRINTFILE_ENTRY \
+    UI_BED_TEMP_PRINTING ,&ui_menu_quick_speedmultiply_printing UI_CHANGE_FIL_ENT_PRINTING ,&ui_menu_quick_flowmultiply_printing UI_FANSPEED_PRINTING UI_FAN2SPEED_PRINTING UI_IGNORE106_ENTRY_PRINTING BABY_ENTRY_PRINTING SD_PRINTFILE_ENTRY \
     ,&ui_menu_move, &ui_menu_extrudercontrol, \
     UI_MENU_COATING_COND UI_MENU_SD_COND &ui_setup, &ui_menu_settings}
     
 UI_MENU(ui_menu_main, UI_MENU_MAIN, 10 + UI_MENU_BACKCNT + UI_MENU_SD_CNT + SD_PRINTFILE_ENTRY_CNT + UI_MENU_COATING_CNT +UI_TEMP0_CNT+UI_TEMP1_CNT+UI_TEMP2_CNT+UI_TEMP3_CNT+\
-    UI_TEMP4_CNT+UI_TEMP5_CNT+ BABY_CNT+HAVE_HEATED_BED+UI_MENU_FAN_CNT+UI_MENU_FAN2_CNT+UI_CHANGE_FIL_CNT)
+    UI_TEMP4_CNT+UI_TEMP5_CNT+ BABY_CNT+HAVE_HEATED_BED+2*UI_MENU_FAN_CNT+UI_MENU_FAN2_CNT+UI_CHANGE_FIL_CNT)
 
 /* Define menus accessible by action commands
 

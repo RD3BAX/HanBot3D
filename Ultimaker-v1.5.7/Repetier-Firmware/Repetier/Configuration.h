@@ -83,7 +83,7 @@
 #define EXT0_Y_OFFSET 0
 #define EXT0_Z_OFFSET 0
 #define EXT0_STEPS_PER_MM 96
-#define EXT0_TEMPSENSOR_TYPE 1
+#define EXT0_TEMPSENSOR_TYPE 13
 #define EXT0_TEMPSENSOR_PIN TEMP_0_PIN
 #define EXT0_HEATER_PIN HEATER_0_PIN
 #define EXT0_STEP_PIN ORIG_E0_STEP_PIN
@@ -159,6 +159,7 @@
 #define GENERIC_THERM_VREF 5
 #define GENERIC_THERM_NUM_ENTRIES 33
 #define HEATER_PWM_SPEED 0
+#define COOLER_PWM_SPEED 0
 
 // ############# Heated bed configuration ########################
 
@@ -212,6 +213,9 @@ automatically disabled.
 #define SUPPORT_LASER 0
 #define LASER_PIN -1
 #define LASER_ON_HIGH 1
+#define LASER_WARMUP_TIME 0
+#define LASER_PWM_MAX 255
+#define LASER_WATT 2
 
 // ##                              CNC configuration                                       ##
 
@@ -229,7 +233,9 @@ It also can add a delay to wait for spindle to run on full speed.
 #define CNC_ENABLE_WITH 1
 #define CNC_DIRECTION_PIN -1
 #define CNC_DIRECTION_CW 1
-
+#define CNC_PWM_MAX 255
+#define CNC_RPM_MAX 8000
+#define CNC_SAFE_Z 150
 
 #define DEFAULT_PRINTER_MODE 0
 
@@ -257,6 +263,28 @@ It also can add a delay to wait for spindle to run on full speed.
 #define ENDSTOP_PULLUP_Z_MAX true
 #define ENDSTOP_Z_MAX_INVERTING true
 #define MAX_HARDWARE_ENDSTOP_Z true
+#define ENDSTOP_PULLUP_X2_MIN true
+#define ENDSTOP_PULLUP_Y2_MIN true
+#define ENDSTOP_PULLUP_Z2_MINMAX true
+#define ENDSTOP_PULLUP_X2_MAX true
+#define ENDSTOP_PULLUP_Y2_MAX true
+#define ENDSTOP_X2_MIN_INVERTING false
+#define ENDSTOP_Y2_MIN_INVERTING false
+#define ENDSTOP_X2_MAX_INVERTING false
+#define ENDSTOP_Y2_MAX_INVERTING false
+#define MIN_HARDWARE_ENDSTOP_X2 false
+#define MIN_HARDWARE_ENDSTOP_Y2 false
+#define MAX_HARDWARE_ENDSTOP_X2 false
+#define MAX_HARDWARE_ENDSTOP_Y2 false
+#define MINMAX_HARDWARE_ENDSTOP_Z2 false
+#define X2_MIN_PIN -1
+#define X2_MAX_PIN -1
+#define Y2_MIN_PIN -1
+#define Y2_MAX_PIN -1
+#define Z2_MINMAX_PIN -1
+
+
+
 #define max_software_endstop_r true
 
 #define min_software_endstop_x false
@@ -292,8 +320,13 @@ It also can add a delay to wait for spindle to run on full speed.
 #define DISABLE_Z 0
 #define DISABLE_E 0
 #define INVERT_X_DIR 0
+#define INVERT_X2_DIR 0
 #define INVERT_Y_DIR 0
+#define INVERT_Y2_DIR 0
 #define INVERT_Z_DIR 0
+#define INVERT_Z2_DIR 0
+#define INVERT_Z3_DIR 0
+#define INVERT_Z4_DIR 0
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
@@ -303,10 +336,11 @@ It also can add a delay to wait for spindle to run on full speed.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define Z2_MINMAX_PIN -1
+
 
 #define DISTORTION_CORRECTION 0
 #define DISTORTION_CORRECTION_POINTS 5
+#define DISTORTION_LIMIT_TO 2
 #define DISTORTION_CORRECTION_R 100
 #define DISTORTION_PERMANENT 1
 #define DISTORTION_UPDATE_FREQUENCY 15
@@ -344,6 +378,7 @@ It also can add a delay to wait for spindle to run on full speed.
 #define HOMING_ORDER HOME_ORDER_XZY
 #define ZHOME_PRE_RAISE 0
 #define ZHOME_PRE_RAISE_DISTANCE 10
+#define RAISE_Z_ON_TOOLCHANGE 0
 #define ZHOME_MIN_TEMPERATURE 0
 #define ZHOME_HEAT_ALL 1
 #define ZHOME_HEAT_HEIGHT 20
@@ -374,6 +409,8 @@ It also can add a delay to wait for spindle to run on full speed.
 #define LOW_TICKS_PER_MOVE 250000
 #define EXTRUDER_SWITCH_XY_SPEED 100
 #define DUAL_X_AXIS 0
+#define DUAL_X_RESOLUTION 0
+#define X2AXIS_STEPS_PER_MM 100
 #define FEATURE_TWO_XSTEPPER 0
 #define X2_STEP_PIN   ORIG_E1_STEP_PIN
 #define X2_DIR_PIN    ORIG_E1_DIR_PIN
@@ -404,6 +441,7 @@ It also can add a delay to wait for spindle to run on full speed.
 #define BAUDRATE 115200
 #define ENABLE_POWER_ON_STARTUP 1
 #define POWER_INVERTING 0
+#define AUTOMATIC_POWERUP 0
 #define KILL_METHOD 1
 #define ACK_WITH_LINENUMBER 1
 #define KEEP_ALIVE_INTERVAL 2000
@@ -431,6 +469,7 @@ WARNING: Servos can draw a considerable amount of current. Make sure your system
 #define SERVO3_NEUTRAL_POS  -1
 #define UI_SERVO_CONTROL 0
 #define FAN_KICKSTART_TIME  200
+#define MAX_FAN_PWM 255
 
         #define FEATURE_WATCHDOG 1
 
@@ -441,6 +480,7 @@ WARNING: Servos can draw a considerable amount of current. Make sure your system
 #define UI_BED_COATING 1
 #define FEATURE_Z_PROBE 0
 #define EXTRUDER_IS_Z_PROBE 0
+#define Z_PROBE_DISABLE_HEATERS 0
 #define Z_PROBE_BED_DISTANCE 10
 #define Z_PROBE_PIN -1
 #define Z_PROBE_PULLUP 0
@@ -453,6 +493,7 @@ WARNING: Servos can draw a considerable amount of current. Make sure your system
 #define Z_PROBE_SWITCHING_DISTANCE 1
 #define Z_PROBE_REPETITIONS 1
 #define Z_PROBE_HEIGHT 40
+#define Z_PROBE_DELAY 0
 #define Z_PROBE_START_SCRIPT ""
 #define Z_PROBE_FINISHED_SCRIPT ""
 #define Z_PROBE_RUN_AFTER_EVERY_PROBE ""
@@ -565,11 +606,16 @@ Values must be in range 1..255
     "yStepsPerMM": 85.3333,
     "zStepsPerMM": 2560,
     "xInvert": "0",
+    "x2Invert": 0,
     "xInvertEnable": 0,
     "eepromMode": 2,
     "yInvert": "0",
+    "y2Invert": 0,
     "yInvertEnable": 0,
     "zInvert": "0",
+    "z2Invert": 0,
+    "z3Invert": 0,
+    "z4Invert": 0,
     "zInvertEnable": 0,
     "extruder": [
         {
@@ -578,7 +624,7 @@ Values must be in range 1..255
             "pidDriveMin": 40,
             "pidDriveMax": 230,
             "pidMax": 255,
-            "sensorType": 1,
+            "sensorType": 13,
             "sensorPin": "TEMP_0_PIN",
             "heaterPin": "HEATER_0_PIN",
             "maxFeedrate": 20,
@@ -635,6 +681,10 @@ Values must be in range 1..255
     "xMaxEndstop": 0,
     "yMaxEndstop": 0,
     "zMaxEndstop": 1,
+    "x2MinEndstop": 0,
+    "y2MinEndstop": 0,
+    "x2MaxEndstop": 0,
+    "y2MaxEndstop": 0,
     "motherboard": 37,
     "driveSystem": 0,
     "xMaxSpeed": 200,
@@ -877,6 +927,7 @@ Values must be in range 1..255
     "scalePidToMax": "0",
     "zProbePin": -1,
     "zProbeBedDistance": 10,
+    "zProbeDisableHeaters": "0",
     "zProbePullup": "0",
     "zProbeOnHigh": "0",
     "zProbeXOffset": 0,
@@ -913,6 +964,10 @@ Values must be in range 1..255
     "xMaxPin": "ORIG_X_MAX_PIN",
     "yMaxPin": "ORIG_Y_MAX_PIN",
     "zMaxPin": "ORIG_Z_MAX_PIN",
+    "x2MinPin": -1,
+    "y2MinPin": -1,
+    "x2MaxPin": -1,
+    "y2MaxPin": -1,
     "deltaHomeOnPower": "0",
     "fanBoardPin": 59,
     "heaterPWMSpeed": 0,
@@ -987,7 +1042,12 @@ Values must be in range 1..255
             "speed": 10,
             "dirPin": -1,
             "stepPin": -1,
-            "enablePin": -1
+            "enablePin": -1,
+            "endstopPin": -1,
+            "invertEndstop": "0",
+            "minEndstop": "1",
+            "endstopPullup": "1",
+            "maxDistance": 20
         },
         {
             "t": "None",
@@ -998,7 +1058,12 @@ Values must be in range 1..255
             "speed": 10,
             "dirPin": -1,
             "stepPin": -1,
-            "enablePin": -1
+            "enablePin": -1,
+            "endstopPin": -1,
+            "invertEndstop": "0",
+            "minEndstop": "1",
+            "endstopPullup": "1",
+            "maxDistance": 20
         },
         {
             "t": "None",
@@ -1009,7 +1074,12 @@ Values must be in range 1..255
             "speed": 10,
             "dirPin": -1,
             "stepPin": -1,
-            "enablePin": -1
+            "enablePin": -1,
+            "endstopPin": -1,
+            "invertEndstop": "0",
+            "minEndstop": "1",
+            "endstopPullup": "1",
+            "maxDistance": 20
         },
         {
             "t": "None",
@@ -1020,7 +1090,12 @@ Values must be in range 1..255
             "speed": 10,
             "dirPin": -1,
             "stepPin": -1,
-            "enablePin": -1
+            "enablePin": -1,
+            "endstopPin": -1,
+            "invertEndstop": "0",
+            "minEndstop": "1",
+            "endstopPullup": "1",
+            "maxDistance": 20
         },
         {
             "t": "None",
@@ -1031,7 +1106,12 @@ Values must be in range 1..255
             "speed": 10,
             "dirPin": -1,
             "stepPin": -1,
-            "enablePin": -1
+            "enablePin": -1,
+            "endstopPin": -1,
+            "invertEndstop": "0",
+            "minEndstop": "1",
+            "endstopPullup": "1",
+            "maxDistance": 20
         },
         {
             "t": "None",
@@ -1042,7 +1122,12 @@ Values must be in range 1..255
             "speed": 10,
             "dirPin": -1,
             "stepPin": -1,
-            "enablePin": -1
+            "enablePin": -1,
+            "endstopPin": -1,
+            "invertEndstop": "0",
+            "minEndstop": "1",
+            "endstopPullup": "1",
+            "maxDistance": 20
         }
     ],
     "manualConfig": "",
@@ -1053,6 +1138,7 @@ Values must be in range 1..255
     "zHomeHeatAll": "1",
     "zProbeZOffsetMode": 0,
     "zProbeZOffset": 0,
+    "zProbeDelay": 0,
     "uiBedCoating": "1",
     "langEN": "1",
     "langDE": "0",
@@ -1075,7 +1161,10 @@ Values must be in range 1..255
     "supportLaser": "0",
     "laserPin": -1,
     "laserOnHigh": "1",
+    "laserWarmupTime": 0,
     "defaultPrinterMode": 0,
+    "laserPwmMax": 255,
+    "laserWatt": 2,
     "supportCNC": "0",
     "cncWaitOnEnable": 300,
     "cncWaitOnDisable": 0,
@@ -1083,6 +1172,9 @@ Values must be in range 1..255
     "cncEnableWith": "1",
     "cncDirectionPin": -1,
     "cncDirectionCW": "1",
+    "cncPwmMax": 255,
+    "cncRpmMax": 8000,
+    "cncSafeZ": 150,
     "startupGCode": "",
     "jsonOutput": "0",
     "bedLevelingMethod": 0,
@@ -1116,6 +1208,13 @@ Values must be in range 1..255
     "doorEndstop": 1,
     "zhomePreRaise": 0,
     "zhomePreRaiseDistance": 10,
+    "dualXResolution": "0",
+    "x2axisStepsPerMM": 100,
+    "coolerPWMSpeed": 0,
+    "maxFanPWM": 255,
+    "raiseZOnToolchange": 0,
+    "distortionLimitTo": 2,
+    "automaticPowerup": 0,
     "uiAnimation": "1",
     "uiPresetBedTempPLA": 60,
     "uiPresetBedABS": 110,

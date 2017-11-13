@@ -93,6 +93,10 @@ usage or for searching for memory induced errors. Switch it off for production, 
 #define WIZARD_STACK_SIZE 8
 #define IGNORE_COORDINATE 999999
 
+#define IS_MAC_TRUE(x) (x!=0)
+#define IS_MAC_FALSE(x) (x==0)
+#define HAS_PIN(x) (defined( x ## _PIN) && x > -1)
+
 // Uncomment if no analyzer is connected
 //#define ANALYZER
 // Channel->pin assignments
@@ -173,6 +177,7 @@ usage or for searching for memory induced errors. Switch it off for production, 
 #define CONTROLLER_FELIX_DUE 405
 #define CONTROLLER_ORCABOTXXLPRO2 25
 #define CONTROLLER_AZSMZ_12864 26
+#define CONTROLLER_REPRAPWORLD_GLCD 27
 
 //direction flags
 #define X_DIRPOS 1
@@ -194,9 +199,6 @@ usage or for searching for memory induced errors. Switch it off for production, 
 #define X_STEP_DIRPOS 17
 #define Z_STEP_DIRPOS 68
 
-// add pid control
-#define TEMP_PID 1
-
 #define PRINTER_MODE_FFF 0
 #define PRINTER_MODE_LASER 1
 #define PRINTER_MODE_CNC 2
@@ -208,6 +210,12 @@ usage or for searching for memory induced errors. Switch it off for production, 
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
 #include "Configuration.h"
+
+#if (LASER_PWM_MAX > 255 && SUPPORT_LASER) || (CNC_PWM_MAX > 255 && SUPPORT_CNC)
+typedef uint16_t secondspeed_t;
+#else
+typedef uint8_t secondspeed_t;
+#endif
 
 #ifndef SHARED_EXTRUDER_HEATER
 #define SHARED_EXTRUDER_HEATER 0
@@ -251,22 +259,16 @@ usage or for searching for memory induced errors. Switch it off for production, 
 #ifndef MAX_JERK_DISTANCE
 #define MAX_JERK_DISTANCE 0.6
 #endif
-#define XY_GANTRY 1
-#define YX_GANTRY 2
-#define DELTA 3
-#define TUGA 4
-#define BIPOD 5
-#define XZ_GANTRY 8
-#define ZX_GANTRY 9
+
 #if defined(FAST_COREXYZ) && !(DRIVE_SYSTEM==XY_GANTRY || DRIVE_SYSTEM==YX_GANTRY || DRIVE_SYSTEM==XZ_GANTRY || DRIVE_SYSTEM==ZX_GANTRY || DRIVE_SYSTEM==GANTRY_FAKE)
 #undef FAST_COREXYZ
 #endif
 #ifdef FAST_COREXYZ
-#if DELTA_SEGMENTS_PER_SECOND_PRINT < 30
+#if DELTA_SEGMENTS_PER_SECOND_PRINT > 30
 #undef DELTA_SEGMENTS_PER_SECOND_PRINT
 #define DELTA_SEGMENTS_PER_SECOND_PRINT 30 // core is linear, no subsegments needed
 #endif
-#if DELTA_SEGMENTS_PER_SECOND_MOVE < 30
+#if DELTA_SEGMENTS_PER_SECOND_MOVE > 30
 #undef DELTA_SEGMENTS_PER_SECOND_MOVE
 #define DELTA_SEGMENTS_PER_SECOND_MOVE 30
 #endif
@@ -312,7 +314,7 @@ inline void memcopy4(void *dest,void *source) {
 #define MICROSTEP2 HIGH,LOW
 #define MICROSTEP4 LOW,HIGH
 #define MICROSTEP8 HIGH,HIGH
-#if (MOTHERBOARD == 501)
+#if (MOTHERBOARD == 501) || MOTHERBOARD==502
 #define MICROSTEP16 LOW,LOW
 #else
 #define MICROSTEP16 HIGH,HIGH
@@ -342,6 +344,20 @@ inline void memcopy4(void *dest,void *source) {
 #define MULTI_ZENDSTOP_ALL 3
 #else
 #define MULTI_ZENDSTOP_HOMING 0
+#endif
+
+#if (X_HOME_DIR < 0 && HAS_PIN(X2_MIN) && MIN_HARDWARE_ENDSTOP_X2) || (X_HOME_DIR > 0 && HAS_PIN(X2_MAX) && MAX_HARDWARE_ENDSTOP_X2)
+#define MULTI_XENDSTOP_HOMING 1
+#define MULTI_XENDSTOP_ALL 3
+#else
+#define MULTI_XENDSTOP_HOMING 0
+#endif
+
+#if (Y_HOME_DIR < 0 && HAS_PIN(Y2_MIN) && MIN_HARDWARE_ENDSTOP_Y2) || (Y_HOME_DIR > 0 && HAS_PIN(Y2_MAX) && MAX_HARDWARE_ENDSTOP_Y2)
+#define MULTI_YENDSTOP_HOMING 1
+#define MULTI_YENDSTOP_ALL 3
+#else
+#define MULTI_YENDSTOP_HOMING 0
 #endif
 
 #define SPEED_MIN_MILLIS 400
@@ -539,6 +555,7 @@ inline void memcopy4(void *dest,void *source) {
 #define DEBUG_MEMORY Commands::checkFreeMemory();
 #endif
 
+#define NUM_ANALOG_TEMP_SENSORS EXT0_ANALOG_INPUTS+EXT1_ANALOG_INPUTS+EXT2_ANALOG_INPUTS+EXT3_ANALOG_INPUTS+EXT4_ANALOG_INPUTS+EXT5_ANALOG_INPUTS+BED_ANALOG_INPUTS+THERMO_ANALOG_INPUTS
 /** \brief number of analog input signals. Normally 1 for each temperature sensor */
 #define ANALOG_INPUTS (EXT0_ANALOG_INPUTS+EXT1_ANALOG_INPUTS+EXT2_ANALOG_INPUTS+EXT3_ANALOG_INPUTS+EXT4_ANALOG_INPUTS+EXT5_ANALOG_INPUTS+BED_ANALOG_INPUTS+THERMO_ANALOG_INPUTS+KEYPAD_ANALOG_INPUTS)
 #if ANALOG_INPUTS > 0
@@ -608,7 +625,7 @@ inline void memcopy4(void *dest,void *source) {
 
 #include "gcode.h"
 
-#if ENABLE_BACKLASH_COMPENSATION && DRIVE_SYSTEM != CARTESIAN
+#if ENABLE_BACKLASH_COMPENSATION && DRIVE_SYSTEM != CARTESIAN && !defined(ENFORCE_BACKLASH)
 #undef ENABLE_BACKLASH_COMPENSATION
 #define ENABLE_BACKLASH_COMPENSATION false
 #endif
@@ -874,6 +891,15 @@ public:
     inline RVector3 operator*(float lhs,const RVector3 &rhs) {
         return rhs.scale(lhs);
     }
+
+#if !defined(MAX_FAN_PWM) || MAX_FAN_PWM == 255
+#define TRIM_FAN_PWM(x) x
+#undef MAX_FAN_PWM
+#define MAX_FAN_PWM 255
+#else
+#define TRIM_FAN_PWM(x) static_cast<uint8_t>(static_cast<unsigned int>(x) * MAX_FAN_PWM / 255)
+#endif
+
 extern const uint8 osAnalogInputChannels[] PROGMEM;
 //extern uint8 osAnalogInputCounter[ANALOG_INPUTS];
 //extern uint osAnalogInputBuildup[ANALOG_INPUTS];
@@ -881,12 +907,12 @@ extern const uint8 osAnalogInputChannels[] PROGMEM;
 #if ANALOG_INPUTS > 0
 extern volatile uint osAnalogInputValues[ANALOG_INPUTS];
 #endif
-#define PWM_HEATED_BED NUM_EXTRUDER
-#define PWM_BOARD_FAN PWM_HEATED_BED+1
-#define PWM_FAN1 PWM_BOARD_FAN+1
-#define PWM_FAN2 PWM_FAN1+1
-#define PWM_FAN_THERMO PWM_FAN2+1
-#define NUM_PWM PWM_FAN_THERMO+1
+#define PWM_HEATED_BED    NUM_EXTRUDER
+#define PWM_BOARD_FAN     PWM_HEATED_BED + 1
+#define PWM_FAN1          PWM_BOARD_FAN + 1
+#define PWM_FAN2          PWM_FAN1 + 1
+#define PWM_FAN_THERMO    PWM_FAN2 + 1
+#define NUM_PWM           PWM_FAN_THERMO + 1
 extern uint8_t pwm_pos[NUM_PWM]; // 0-NUM_EXTRUDER = Heater 0-NUM_EXTRUDER of extruder, NUM_EXTRUDER = Heated bed, NUM_EXTRUDER+1 Board fan, NUM_EXTRUDER+2 = Fan
 #if USE_ADVANCE
 #if ENABLE_QUADRATIC_ADVANCE
@@ -1044,6 +1070,39 @@ extern int debugWaitLoop;
 #else
 #define SQRT(x) sqrt(x)
 #endif
+
+class PlaneBuilder {
+	float sum_xx,sum_xy,sum_yy,sum_x,sum_y,sum_xz,sum_yz,sum_z,n;
+	public:
+	PlaneBuilder() {
+		reset();
+	}
+	void reset() {
+		sum_xx = sum_xy = sum_yy = sum_x = sum_y = sum_xz = sum_yz = sum_z = n = 0;
+	}
+	void addPoint(float x,float y,float z) {
+		n++;
+		sum_xx += x * x;
+		sum_xy += x * y;
+		sum_yy += y * y;
+		sum_x  += x;
+		sum_y  += y;
+		sum_xz += x * z;
+		sum_yz += y * z;
+		sum_z  += z;
+	}
+	void createPlane(Plane &plane,bool silent=false) {
+		float det = (sum_x * (sum_xy * sum_y - sum_x * sum_yy) + sum_xx * (n * sum_yy - sum_y * sum_y) + sum_xy * (sum_x * sum_y - n * sum_xy));
+		plane.a = ((sum_xy * sum_y  - sum_x * sum_yy)  * sum_z + (sum_x * sum_y  - n      * sum_xy) * sum_yz + sum_xz * (n      * sum_yy - sum_y * sum_y))  / det;
+		plane.b = ((sum_x  * sum_xy - sum_xx * sum_y)  * sum_z + (n     * sum_xx - sum_x  * sum_x)  * sum_yz + sum_xz * (sum_x  * sum_y  - n     * sum_xy)) / det;
+		plane.c = ((sum_xx * sum_yy - sum_xy * sum_xy) * sum_z + (sum_x * sum_xy - sum_xx * sum_y)  * sum_yz + sum_xz * (sum_xy * sum_y  - sum_x * sum_yy)) / det;
+		if(!silent) {
+			Com::printF(PSTR("plane: a = "),plane.a,4);
+			Com::printF(PSTR(" b = "),plane.b,4);
+			Com::printFLN(PSTR(" c = "),plane.c,4);
+		}
+	}
+};
 
 #include "Drivers.h"
 
