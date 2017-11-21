@@ -83,7 +83,7 @@
 #define EXT0_Y_OFFSET 0
 #define EXT0_Z_OFFSET 0
 #define EXT0_STEPS_PER_MM 96
-#define EXT0_TEMPSENSOR_TYPE 13
+#define EXT0_TEMPSENSOR_TYPE 1
 #define EXT0_TEMPSENSOR_PIN TEMP_0_PIN
 #define EXT0_HEATER_PIN HEATER_0_PIN
 #define EXT0_STEP_PIN ORIG_E0_STEP_PIN
@@ -115,7 +115,7 @@
 #define EXT0_WAIT_RETRACT_UNITS 0
 #define EXT0_SELECT_COMMANDS ""
 #define EXT0_DESELECT_COMMANDS ""
-#define EXT0_EXTRUDER_COOLER_PIN 64
+#define EXT0_EXTRUDER_COOLER_PIN 7
 #define EXT0_EXTRUDER_COOLER_SPEED 255
 #define EXT0_DECOUPLE_TEST_PERIOD 12000
 #define EXT0_JAM_PIN -1
@@ -163,7 +163,7 @@
 
 // ############# Heated bed configuration ########################
 
-#define HAVE_HEATED_BED 1
+#define HAVE_HEATED_BED 0
 #define HEATED_BED_PREHEAT_TEMP 55
 #define HEATED_BED_MAX_TEMP 140
 #define SKIP_M190_IF_WITHIN 3
@@ -243,10 +243,10 @@ It also can add a delay to wait for spindle to run on full speed.
 
 #define MULTI_ZENDSTOP_HOMING 0
 #define ENDSTOP_PULLUP_X_MIN true
-#define ENDSTOP_X_MIN_INVERTING true
+#define ENDSTOP_X_MIN_INVERTING false
 #define MIN_HARDWARE_ENDSTOP_X true
 #define ENDSTOP_PULLUP_Y_MIN true
-#define ENDSTOP_Y_MIN_INVERTING true
+#define ENDSTOP_Y_MIN_INVERTING false
 #define MIN_HARDWARE_ENDSTOP_Y true
 #define ENDSTOP_PULLUP_Z_MIN false
 #define ENDSTOP_Z_MIN_INVERTING false
@@ -261,8 +261,8 @@ It also can add a delay to wait for spindle to run on full speed.
 #define ENDSTOP_Y_MAX_INVERTING false
 #define MAX_HARDWARE_ENDSTOP_Y false
 #define ENDSTOP_PULLUP_Z_MAX true
-#define ENDSTOP_Z_MAX_INVERTING true
-#define MAX_HARDWARE_ENDSTOP_Z true
+#define ENDSTOP_Z_MAX_INVERTING false
+#define MAX_HARDWARE_ENDSTOP_Z false
 #define ENDSTOP_PULLUP_X2_MIN true
 #define ENDSTOP_PULLUP_Y2_MIN true
 #define ENDSTOP_PULLUP_Z2_MINMAX true
@@ -292,10 +292,10 @@ It also can add a delay to wait for spindle to run on full speed.
 #define min_software_endstop_z false
 #define max_software_endstop_x true
 #define max_software_endstop_y true
-#define max_software_endstop_z false
+#define max_software_endstop_z true
 #define DOOR_PIN -1
 #define DOOR_PULLUP 1
-#define DOOR_INVERTING 1
+#define DOOR_INVERTING 0
 #define ENDSTOP_X_BACK_MOVE 5
 #define ENDSTOP_Y_BACK_MOVE 5
 #define ENDSTOP_Z_BACK_MOVE 2
@@ -419,7 +419,7 @@ It also can add a delay to wait for spindle to run on full speed.
 #define Y2_STEP_PIN   ORIG_E1_STEP_PIN
 #define Y2_DIR_PIN    ORIG_E1_DIR_PIN
 #define Y2_ENABLE_PIN ORIG_E1_ENABLE_PIN
-#define FEATURE_TWO_ZSTEPPER 0
+#define FEATURE_TWO_ZSTEPPER 1
 #define Z2_STEP_PIN   ORIG_E1_STEP_PIN
 #define Z2_DIR_PIN    ORIG_E1_DIR_PIN
 #define Z2_ENABLE_PIN ORIG_E1_ENABLE_PIN
@@ -624,7 +624,7 @@ Values must be in range 1..255
             "pidDriveMin": 40,
             "pidDriveMax": 230,
             "pidMax": 255,
-            "sensorType": 13,
+            "sensorType": 1,
             "sensorPin": "TEMP_0_PIN",
             "heaterPin": "HEATER_0_PIN",
             "maxFeedrate": 20,
@@ -642,7 +642,7 @@ Values must be in range 1..255
             "waitRetractUnits": 0,
             "waitRetract": 0.001,
             "stepsPerMM": 96,
-            "coolerPin": 64,
+            "coolerPin": 7,
             "coolerSpeed": 255,
             "selectCommands": "",
             "deselectCommands": "",
@@ -675,12 +675,12 @@ Values must be in range 1..255
     ],
     "uiLanguage": 0,
     "uiController": 0,
-    "xMinEndstop": 1,
-    "yMinEndstop": 1,
+    "xMinEndstop": 2,
+    "yMinEndstop": 2,
     "zMinEndstop": 4,
     "xMaxEndstop": 0,
     "yMaxEndstop": 0,
-    "zMaxEndstop": 1,
+    "zMaxEndstop": 0,
     "x2MinEndstop": 0,
     "y2MinEndstop": 0,
     "x2MaxEndstop": 0,
@@ -791,7 +791,7 @@ Values must be in range 1..255
         "dir": "ORIG_E1_DIR_PIN",
         "enable": "ORIG_E1_ENABLE_PIN"
     },
-    "mirrorZ": "0",
+    "mirrorZ": "1",
     "mirrorZMotor": {
         "name": "Extruder 1",
         "step": "ORIG_E1_STEP_PIN",
@@ -819,7 +819,7 @@ Values must be in range 1..255
     "servo2Pin": -1,
     "servo3Pin": -1,
     "featureWatchdog": "1",
-    "hasHeatedBed": "1",
+    "hasHeatedBed": "0",
     "enableZProbing": "0",
     "extrudeMaxLength": 160,
     "homeOrder": "HOME_ORDER_XZY",
@@ -1205,7 +1205,7 @@ Values must be in range 1..255
     "extruderIsZProbe": "0",
     "boardFanMinSpeed": 0,
     "doorPin": -1,
-    "doorEndstop": 1,
+    "doorEndstop": 0,
     "zhomePreRaise": 0,
     "zhomePreRaiseDistance": 10,
     "dualXResolution": "0",
