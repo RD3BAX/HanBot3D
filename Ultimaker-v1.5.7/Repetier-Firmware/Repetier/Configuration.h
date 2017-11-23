@@ -163,15 +163,15 @@
 
 // ############# Heated bed configuration ########################
 
-#define HAVE_HEATED_BED 0
+#define HAVE_HEATED_BED 1
 #define HEATED_BED_PREHEAT_TEMP 55
 #define HEATED_BED_MAX_TEMP 140
 #define SKIP_M190_IF_WITHIN 3
 #define HEATED_BED_SENSOR_TYPE 1
-#define HEATED_BED_SENSOR_PIN TEMP_2_PIN
+#define HEATED_BED_SENSOR_PIN TEMP_1_PIN
 #define HEATED_BED_HEATER_PIN HEATER_1_PIN
 #define HEATED_BED_SET_INTERVAL 5000
-#define HEATED_BED_HEAT_MANAGER 1
+#define HEATED_BED_HEAT_MANAGER 0
 #define HEATED_BED_PID_INTEGRAL_DRIVE_MAX 255
 #define HEATED_BED_PID_INTEGRAL_DRIVE_MIN 80
 #define HEATED_BED_PID_PGAIN_OR_DEAD_TIME   196
@@ -439,7 +439,7 @@ It also can add a delay to wait for spindle to run on full speed.
 // ################# Misc. settings ##################
 
 #define BAUDRATE 115200
-#define ENABLE_POWER_ON_STARTUP 1
+#define ENABLE_POWER_ON_STARTUP 0
 #define POWER_INVERTING 0
 #define AUTOMATIC_POWERUP 0
 #define KILL_METHOD 1
@@ -769,7 +769,7 @@ Values must be in range 1..255
     "moveCacheSize": 16,
     "moveCacheLow": 10,
     "lowTicksPerMove": 250000,
-    "enablePowerOnStartup": "1",
+    "enablePowerOnStartup": "0",
     "echoOnExecute": "1",
     "sendWaits": "1",
     "ackWithLineNumber": "1",
@@ -819,7 +819,7 @@ Values must be in range 1..255
     "servo2Pin": -1,
     "servo3Pin": -1,
     "featureWatchdog": "1",
-    "hasHeatedBed": "0",
+    "hasHeatedBed": "1",
     "enableZProbing": "0",
     "extrudeMaxLength": 160,
     "homeOrder": "HOME_ORDER_XZY",
@@ -847,9 +847,9 @@ Values must be in range 1..255
     "uiSpeeddependentPositioning": "0",
     "maxBedTemperature": 140,
     "bedSensorType": 1,
-    "bedSensorPin": "TEMP_2_PIN",
+    "bedSensorPin": "TEMP_1_PIN",
     "bedHeaterPin": "HEATER_1_PIN",
-    "bedHeatManager": 1,
+    "bedHeatManager": 0,
     "bedPreheat": 55,
     "bedUpdateInterval": 5000,
     "bedPidDriveMin": 80,
