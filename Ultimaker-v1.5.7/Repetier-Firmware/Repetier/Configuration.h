@@ -46,7 +46,7 @@
 #undef FAN_PIN
 #define FAN_PIN 8
 #undef FAN_BOARD_PIN
-#define FAN_BOARD_PIN 59
+#define FAN_BOARD_PIN 7
 #define BOARD_FAN_SPEED 255
 #define BOARD_FAN_MIN_SPEED 0
 #define FAN_THERMO_PIN -1
@@ -969,7 +969,7 @@ Values must be in range 1..255
     "x2MaxPin": -1,
     "y2MaxPin": -1,
     "deltaHomeOnPower": "0",
-    "fanBoardPin": 59,
+    "fanBoardPin": 7,
     "heaterPWMSpeed": 0,
     "featureBabystepping": "1",
     "babystepMultiplicator": 1,
