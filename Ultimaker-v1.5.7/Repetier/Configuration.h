@@ -167,7 +167,7 @@
 #define HEATED_BED_PREHEAT_TEMP 55
 #define HEATED_BED_MAX_TEMP 140
 #define SKIP_M190_IF_WITHIN 3
-#define HEATED_BED_SENSOR_TYPE 1
+#define HEATED_BED_SENSOR_TYPE 14
 #define HEATED_BED_SENSOR_PIN TEMP_1_PIN
 #define HEATED_BED_HEATER_PIN HEATER_1_PIN
 #define HEATED_BED_SET_INTERVAL 5000
@@ -846,7 +846,7 @@ Values must be in range 1..255
     "uiExtruderRetractDistance": 3,
     "uiSpeeddependentPositioning": "0",
     "maxBedTemperature": 140,
-    "bedSensorType": 1,
+    "bedSensorType": 14,
     "bedSensorPin": "TEMP_1_PIN",
     "bedHeaterPin": "HEATER_1_PIN",
     "bedHeatManager": 0,
